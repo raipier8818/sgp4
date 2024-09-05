@@ -35,6 +35,6 @@ if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "local"
     mode_type = ["local", "remote"]
     if mode not in mode_type:
-        raise Exception(f"Mode must be one of {mode_type}")
+        raise Exception("Invalid mode. Please choose between 'local' or 'remote'")
 
     main(mode)
