@@ -1,4 +1,7 @@
 import os
+from pprint import pprint
+from matplotlib.pylab import f
+import requests
 
 
 def get_tle_list(path):
@@ -32,6 +35,24 @@ def read_tle(path):
 
     return tle
 
+
+def read_tle_from_tle_api():
+    try:
+        url = "https://tle.ivanstanojevic.me/api/tle"
+        response = requests.get(url)
+        tle = {}
+        
+        if response.status_code != 200:
+            raise Exception('API Error with {}'.format(response.status_code))
+        data = response.json()
+        
+        for member in data.member:
+            tle[member.name] = (member.line1, member.line2)
+            
+        return tle
+    except Exception as e:
+        print(e)
+        return {}
 
 if __name__ == "__main__":
     print(read_tle("tle/"))
